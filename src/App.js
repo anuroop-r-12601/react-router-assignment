@@ -1,12 +1,12 @@
 import React from 'react'
 import {Routes,Route, BrowserRouter } from 'react-router-dom'
 
-import Profile from './Profile';
-import ErrorPage from './ErrorPage';
-import FriendList from './FriendList';
+import Profile from './components/Profile';
+import ErrorPage from './components/ErrorPage';
+import FriendList from './components/FriendList';
 
 import './App.css';
-import Home from './Home';
+import Home from './components/Home';
 
 function App() {
   return (

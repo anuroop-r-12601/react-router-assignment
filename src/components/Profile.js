@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import {data} from './users'
+import {data} from '../users'
 function Profile() {
     const {id=1} = useParams();
     const [user,setUser]=useState({});

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { data } from "./users";
+import { data } from "../users";
 import { Link } from "react-router-dom";
 function FriendList() {
   const [users, setUsers] = useState(data);

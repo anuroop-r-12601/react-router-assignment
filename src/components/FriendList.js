@@ -1,13 +1,34 @@
-import React, { useState } from "react";
-import { data } from "../users";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-function FriendList() {
+import { connect } from "react-redux";
+import { getUser } from "../redux-components/actions";
+
+const mapStateToProps = state =>{
+  return {
+    data : state.users,
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    requestUsers : ()=>dispatch(getUser()),
+  }
+}
+
+function FriendList({data,requestUsers}) {
   const [users, setUsers] = useState(data);
+useEffect(()=>{
+  requestUsers();
+  setUsers(data);
+  console.log("updated",data)
+},[JSON.stringify(data)])
+
   return (
     <div>
       <div className="container">
       <h1>My Friends</h1>
-      {users
+      {console.log("users",users)}
+      {users.length>0 && users
         .filter((user) => user.id != 1)
         .map((user) => {
           return (
@@ -29,4 +50,4 @@ function FriendList() {
   );
 }
 
-export default FriendList;
+export default connect(mapStateToProps,mapDispatchToProps)(FriendList);

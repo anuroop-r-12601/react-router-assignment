@@ -3,17 +3,18 @@ import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 const mapStateToProps = (state) => {return {
-    data:state.users
+    data:state.users,
+    loading: state.loading
 }};
 
-function Profile({data}) {
+function Profile({data,loading}) {
   const { id = 1 } = useParams();
   const [user, setUser] = useState(undefined);
   const navigate = useNavigate();
   useEffect(() => {
     // console.log(data.length)
     if(data){
-        const userData = data.find((user) => {
+        const userData = Array.from(data).find((user) => {
             return user.id === parseInt(id)});
         console.log(userData);
         if (userData) setUser(userData);
@@ -23,7 +24,7 @@ function Profile({data}) {
     }
   }, [JSON.stringify(data)]);
   return (<>
-      {user &&
+      {loading ? <h1>Loading</h1>: user &&
       <div className="profile">
       <img src='https://res.cloudinary.com/diqqf3eq2/image/upload/v1595959131/person-2_ipcjws.jpg' className="profPic" /> 
       <div className="profile-box">

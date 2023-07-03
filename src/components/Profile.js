@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { getUser } from "../redux-components/actions";
 
 const mapStateToProps = (state) => {return {
     data:state.users,
     loading: state.loading
 }};
+const mapDispatchToProps = dispatch =>{
+  return {
+    requestUsers : ()=>dispatch(getUser()),
+  }
+}
 
-function Profile({data,loading}) {
+function Profile({data,loading,requestUsers}) {
   const { id = 1 } = useParams();
   const [user, setUser] = useState(undefined);
   const navigate = useNavigate();
   useEffect(() => {
-    // console.log(data.length)
-    if(data){
-        const userData = Array.from(data).find((user) => {
-            return user.id === parseInt(id)});
+    console.log(data)
+    if(!data){
+      requestUsers();
+    }
+    else{
+
+      const userData = Array.from(data).find((user) => {
+        return user.id === parseInt(id)});
         console.log(userData);
         if (userData) setUser(userData);
         else {
-            id != 1 && navigate("/error", {});
+          id != 1 && navigate("/error", {});
         }
-    }
+      }
   }, [JSON.stringify(data)]);
   return (<>
       {loading ? <h1>Loading</h1>: user &&
@@ -39,4 +49,4 @@ function Profile({data,loading}) {
   );
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps,mapDispatchToProps)(Profile);

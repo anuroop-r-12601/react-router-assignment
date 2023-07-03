@@ -4,7 +4,7 @@ import { GET_USERS_FAILURE, GET_USERS_REQUEST, GET_USERS_SUCCESS } from "./actio
 const initialState={
     isLoading : false,
     error : {},
-    users: {}
+    users: null
 }
 
 export const userReducer = (state=initialState,action ) => {
